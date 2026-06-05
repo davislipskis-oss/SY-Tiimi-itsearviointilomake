@@ -1,0 +1,853 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SY Tiimi tekemisen laadun mittaristo</title>
+  <meta name="description" content="SY Tiimi tekemisen laadun mittaristo - itsearviointilomake." />
+  <style>
+    :root {
+      --black: #000000;
+      --white: #ffffff;
+      --blue: #80c7e3;
+      --blue-soft: #d7edf7;
+      --blue-soft-2: #e9f5fa;
+      --orange: #ff5c2a;
+      --sand: #e7e4dc;
+      --sand-2: #f4f2ec;
+      --text: #111111;
+      --muted: #5b5b5b;
+      --line: #ffffff;
+      --dark-line: #222222;
+      --ok: #166534;
+      --danger: #9b1c1c;
+      --radius: 18px;
+      --shadow: 0 18px 55px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(128,199,227,0.28), transparent 32rem),
+        linear-gradient(180deg, var(--white) 0%, var(--sand-2) 100%);
+      min-height: 100vh;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0 60px;
+    }
+
+    header {
+      border-bottom: 10px solid var(--orange);
+      padding: 22px 0 30px;
+      margin-bottom: 28px;
+    }
+
+    .brand-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--black);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: 0.01em;
+      margin-bottom: 16px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--orange);
+      display: inline-block;
+    }
+
+    h1 {
+      font-size: clamp(36px, 6vw, 72px);
+      line-height: 0.96;
+      letter-spacing: -0.055em;
+      margin: 0;
+      max-width: 950px;
+      font-weight: 950;
+    }
+
+    .lead {
+      max-width: 790px;
+      margin: 18px 0 0;
+      font-size: 18px;
+      line-height: 1.5;
+      color: #303030;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.94);
+      border: 1px solid #ddd8ce;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .section {
+      padding: 22px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 1fr;
+      gap: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: 900;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 2px solid #d9d4c8;
+      background: var(--white);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 16px;
+      outline: none;
+      min-height: 50px;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(128,199,227,0.30);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 110px;
+      line-height: 1.45;
+    }
+
+    .helper {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    .metric {
+      margin-top: 22px;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 2px solid var(--dark-line);
+      background: var(--white);
+    }
+
+    .metric-title-bar {
+      background: var(--black);
+      color: var(--white);
+      padding: 18px 22px;
+      font-size: 32px;
+      line-height: 1.05;
+      font-weight: 950;
+      letter-spacing: -0.04em;
+    }
+
+    .metric-table {
+      display: grid;
+      grid-template-columns: 116px minmax(0, 1fr);
+      width: 100%;
+    }
+
+    .vertical-label {
+      grid-row: 1 / span 5;
+      background: var(--orange);
+      color: var(--white);
+      border-right: 2px solid var(--dark-line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+
+    .vertical-label span {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 24px;
+      font-weight: 950;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: 160px minmax(0, 1fr);
+    }
+
+    .table-head {
+      display: contents;
+    }
+
+    .head-cell {
+      background: var(--blue);
+      color: var(--text);
+      font-weight: 950;
+      font-size: 22px;
+      padding: 10px 14px;
+      border-bottom: 3px solid var(--white);
+    }
+
+    .score-row {
+      display: contents;
+      cursor: pointer;
+    }
+
+    .score-cell,
+    .definition-cell {
+      border-bottom: 2px solid var(--white);
+      background: var(--blue-soft);
+      min-height: 68px;
+      transition: background 140ms ease, color 140ms ease, box-shadow 140ms ease;
+    }
+
+    .score-row:nth-of-type(odd) .score-cell,
+    .score-row:nth-of-type(odd) .definition-cell {
+      background: var(--blue-soft-2);
+    }
+
+    .score-cell {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 12px 12px;
+      font-size: 23px;
+    }
+
+    .definition-cell {
+      padding: 12px 14px;
+      font-size: 22px;
+      line-height: 1.28;
+    }
+
+    .score-row:hover .score-cell,
+    .score-row:hover .definition-cell {
+      background: #c7e9f7;
+    }
+
+    .score-row.selected .score-cell,
+    .score-row.selected .definition-cell {
+      background: var(--orange);
+      color: var(--black);
+      box-shadow: inset 0 0 0 3px var(--black);
+    }
+
+    .sr-radio {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .reflection {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .summary {
+      position: sticky;
+      top: 18px;
+      padding: 22px;
+    }
+
+    .score-circle {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: var(--black);
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      margin: 0 auto 18px;
+      border: 12px solid var(--orange);
+      text-align: center;
+    }
+
+    .score-circle strong {
+      display: block;
+      font-size: 52px;
+      letter-spacing: -0.08em;
+      line-height: 0.95;
+    }
+
+    .score-circle span {
+      display: block;
+      font-size: 14px;
+      font-weight: 900;
+      opacity: 0.95;
+    }
+
+    .summary h2 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      letter-spacing: -0.03em;
+    }
+
+    .summary-list {
+      list-style: none;
+      margin: 18px 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .summary-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid #ded8cd;
+      padding-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .summary-list strong {
+      font-size: 16px;
+    }
+
+    .button-row {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    button.primary,
+    button.secondary {
+      border: 0;
+      border-radius: 14px;
+      min-height: 52px;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-weight: 950;
+      cursor: pointer;
+      transition: transform 120ms ease, opacity 120ms ease;
+    }
+
+    button.primary {
+      background: var(--orange);
+      color: var(--black);
+    }
+
+    button.secondary {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    button.primary:hover,
+    button.secondary:hover {
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .notice {
+      padding: 12px 14px;
+      border-radius: 12px;
+      line-height: 1.4;
+      font-size: 14px;
+      margin-top: 14px;
+      display: none;
+    }
+
+    .notice.show {
+      display: block;
+    }
+
+    .notice.ok {
+      background: #dcfce7;
+      color: var(--ok);
+      border: 1px solid #86efac;
+    }
+
+    .notice.error {
+      background: #fee2e2;
+      color: var(--danger);
+      border: 1px solid #fecaca;
+    }
+
+    .email-preview {
+      margin-top: 18px;
+      border-top: 1px solid #ded8cd;
+      padding-top: 18px;
+    }
+
+    .email-preview pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: var(--sand-2);
+      border: 1px solid #ded8cd;
+      border-radius: 14px;
+      padding: 14px;
+      max-height: 360px;
+      overflow: auto;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    footer {
+      margin-top: 26px;
+      padding-top: 20px;
+      border-top: 1px solid #ded8cd;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 1080px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .summary {
+        position: static;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .page {
+        width: min(100% - 20px, 1180px);
+        padding-top: 18px;
+      }
+
+      .form-grid,
+      .reflection {
+        grid-template-columns: 1fr;
+      }
+
+      .section,
+      .summary {
+        padding: 16px;
+      }
+
+      .metric-title-bar {
+        font-size: 28px;
+      }
+
+      .metric-table {
+        grid-template-columns: 1fr;
+      }
+
+      .vertical-label {
+        grid-row: auto;
+        border-right: 0;
+        border-bottom: 2px solid var(--dark-line);
+        min-height: 56px;
+      }
+
+      .vertical-label span {
+        writing-mode: horizontal-tb;
+        transform: none;
+        font-size: 20px;
+      }
+
+      .score-grid {
+        grid-template-columns: 86px minmax(0, 1fr);
+      }
+
+      .head-cell {
+        font-size: 18px;
+      }
+
+      .score-cell {
+        font-size: 20px;
+      }
+
+      .definition-cell {
+        font-size: 16px;
+        line-height: 1.35;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .summary,
+      .button-row,
+      footer {
+        display: none;
+      }
+
+      .layout {
+        display: block;
+      }
+
+      .card {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <span class="brand-chip"><span class="dot"></span> Itsearviointi ennen kehityskeskustelua</span>
+      <h1>SY Tiimi tekemisen laadun mittaristo</h1>
+      <p class="lead">Täytä itsearviointi ennen keskustelua. Valitse jokaisesta mittarista arvosana, kirjoita lyhyt oma huomio ja lähetä valmis pohja esihenkilölle sähköpostilla.</p>
+    </header>
+
+    <div class="layout">
+      <section class="card section" aria-label="Itsearviointilomake">
+        <div class="form-grid">
+          <div>
+            <label for="sellerName">Myyjän nimi</label>
+            <input id="sellerName" type="text" autocomplete="name" placeholder="Kirjoita nimesi" />
+          </div>
+          <div>
+            <label for="assessmentDate">Päivämäärä</label>
+            <input id="assessmentDate" type="date" />
+          </div>
+          <div>
+            <label for="meetingDate">Kehityskeskustelu</label>
+            <input id="meetingDate" type="date" />
+          </div>
+        </div>
+
+        <p class="helper">Arvioi omaa tekemistäsi rehellisesti. Tarkoitus ei ole näyttää täydelliseltä, vaan löytää seuraava paras kehitysfokus.</p>
+
+        <div id="metrics"></div>
+
+        <div class="reflection">
+          <div>
+            <label for="strengths">Missä onnistuin parhaiten?</label>
+            <textarea id="strengths" placeholder="Kirjoita 1–3 konkreettista onnistumista tai vahvuutta."></textarea>
+          </div>
+          <div>
+            <label for="focus">Mihin haluan keskittyä seuraavaksi?</label>
+            <textarea id="focus" placeholder="Kirjoita tärkein kehityskohde ja mitä aiot tehdä eri tavalla."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <aside class="card summary" aria-label="Yhteenveto">
+        <div class="score-circle">
+          <div>
+            <strong id="totalScore">0</strong>
+            <span>/20 pistettä</span>
+          </div>
+        </div>
+
+        <h2>Yhteenveto</h2>
+        <p class="helper">Kun kaikki viisi mittaria on pisteytetty, voit kopioida sähköpostipohjan tai avata valmiin sähköpostiluonnoksen.</p>
+
+        <ul class="summary-list" id="summaryList"></ul>
+
+        <div class="button-row">
+          <button class="primary" id="emailButton" type="button">Avaa sähköpostiluonnos</button>
+          <button class="secondary" id="copyButton" type="button">Kopioi sähköpostipohja</button>
+        </div>
+
+        <div class="notice" id="notice"></div>
+
+        <div class="email-preview">
+          <label for="emailPreview">Sähköpostipohja</label>
+          <pre id="emailPreview"></pre>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      Tämä lomake ei tallenna tietoja palvelimelle. Sähköpostipainike avaa käyttäjän oman sähköpostiohjelman valmiilla viestipohjalla. Lähetys tapahtuu vasta, kun käyttäjä itse lähettää viestin sähköpostiohjelmastaan.
+    </footer>
+  </main>
+
+  <script>
+    const MANAGER_EMAIL = "davis.lipskis@yrittajat.fi";
+
+    const metrics = [
+      {
+        key: "avaus",
+        title: "Avaus",
+        vertical: "AVAUS",
+        scores: {
+          4: "Myyjä antaa asiakkaalle heti relevantin syyn kuunnella, kuulostaa itsevarmalta ja käynnistää keskustelun luontevasti asiakkaan tilanteesta käsin.",
+          3: "Avaus on napakka, selkeä ja ammattimainen. Se saa asiakkaan jäämään linjalle, mutta syy kuunnella ei ole vielä erityisen henkilökohtainen / osuva.",
+          2: "Avaus on asiallinen mutta geneerinen. Asiakas ymmärtää aiheen, mutta kiinnostus ei herää eikä asiakas aktivoidu.",
+          1: "Avaus on epävarma, liian pitkä, monotoninen tai tuotelähtöinen. Asiakas ei saa nopeasti syytä kuunnella ja pyrkii pois puhelusta."
+        }
+      },
+      {
+        key: "motivaatio",
+        title: "Motivaation tunnistaminen",
+        vertical: "MOTIVAATION TUNNISTAMINEN",
+        scores: {
+          4: "Myyjä kysyy ja kuuntelee niin hyvin, että löytää asiakkaan todellisen ostomotiivin. Hän rakentaa keskustelun tämän motiivin ympärille ja myöhempi arvolupaus perustuu siihen.",
+          3: "Myyjä kysyy relevantteja kysymyksiä ja löytää käyttökelpoisen ostomotiivin, mutta ei vielä syvennä tai hyödynnä sitä maksimaalisesti.",
+          2: "Myyjä kysyy yleisiä kysymyksiä tai saa heikon ostosignaalin, mutta ei selvitä sen merkitystä eikä hyödynnä sitä keskustelussa.",
+          1: "Myyjä ei selvitä asiakkaan tilannetta tai ostomotiivia. Hän olettaa tarpeet ja siirtyy suoraan tuote-/jäsenyysesittelyyn."
+        }
+      },
+      {
+        key: "arvolupaus",
+        title: "Arvolupauksen relevanssi",
+        vertical: "ARVOLUPAUKSEN RELEVANSSI",
+        scores: {
+          4: "Myyjä tunnistaa asiakkaan tilanteen ja valitsee 1–2 hyötyä, jotka hän tarinallistaa sekä sitoo erittäin konkreettisesti asiakkaan arkeen, riskiin, rahaan, aikaan tai päätöksentekoon. Asiakas kokee: “tämä koskee minua.”",
+          3: "Myyjä kertoo asiakkaalle relevantteja hyötyjä ja linkittää ne asiakkaan tilanteeseen, mutta konkretia tai henkilökohtainen osuvuus jää vielä hieman vajaaksi.",
+          2: "Myyjä kertoo jonkin mahdollisesti relevantin hyödyn, mutta linkki asiakkaan tilanteeseen jää ohueksi. Puhe kuulostaa vielä osittain geneeriseltä tuote-esittelyltä.",
+          1: "Myyjä luettelee jäsenyyden ominaisuuksia tai etuja ilman asiakaskohtaista linkkiä. Asiakkaalle ei synny selvää syytä, miksi hyöty olisi juuri hänelle tärkeä."
+        }
+      },
+      {
+        key: "vastavaitteet",
+        title: "Vastaväitteiden käsittely",
+        vertical: "VASTAVÄITTEIDEN KÄSITTELY",
+        scores: {
+          4: "Myyjä kuittaa vastaväitteen empatialla, kysyy syventävän kysymyksen, tunnistaa todellisen esteen, vastaa siihen täsmällisesti ja vie keskustelun seuraavaan askeleeseen.",
+          3: "Myyjä pysyy rauhallisena, käsittelee vastaväitteen relevantisti ja saa keskustelun jatkumaan, mutta ei vielä kaiva estettä erityisen syvälle.",
+          2: "Myyjä huomioi vastaväitteen ja antaa jonkin vastauksen, mutta ei kysy riittävästi eikä selvitä asiakkaan todellista syytä.",
+          1: "Myyjä väistää, hyväksyy, puolustautuu, väittelee tai jatkaa myyntiä ilman, että vastaväitettä oikeasti käsitellään."
+        }
+      },
+      {
+        key: "klousaus",
+        title: "Kaupan klousaus",
+        vertical: "KAUPAN KLOUSAUS",
+        scores: {
+          4: "Pyytää kauppaa selkeästi, käsittelee asiakkaan viimeiset vasta-argumentit, klousaa uudelleen ja saa jäsenyyden tehtyä ensimmäisellä puhelulla.",
+          3: "Pyytää kauppaa selkeästi, selvittää epäröinnin syyn, käsittelee vasta-argumentteja ja yrittää klousata uudelleen. Jos kauppa ei synny, sopii erittäin tarkan jatkon.",
+          2: "Yrittää edistää kauppaa, mutta klousaus on varovainen. Hyväksyy asiakkaan epäröinnin liian nopeasti eikä klousaa kunnolla uudestaan.",
+          1: "Ei pyydä kauppaa, ei käsittele viimeisiä vasta-argumentteja eikä sovi konkreettista etenemistä. Puhelu jää ilmaan."
+        }
+      }
+    ];
+
+    const state = Object.fromEntries(metrics.map(metric => [metric.key, 0]));
+
+    const $ = (id) => document.getElementById(id);
+
+    function formatDateForFi(value) {
+      if (!value) return "";
+      const [year, month, day] = value.split("-");
+      return `${day}.${month}.${year}`;
+    }
+
+    function renderMetrics() {
+      const container = $("metrics");
+      container.innerHTML = "";
+
+      metrics.forEach(metric => {
+        const section = document.createElement("section");
+        section.className = "metric";
+        section.setAttribute("aria-labelledby", `${metric.key}-title`);
+
+        section.innerHTML = `
+          <div class="metric-title-bar" id="${metric.key}-title">${metric.title}</div>
+          <div class="metric-table">
+            <div class="vertical-label"><span>${metric.vertical}</span></div>
+            <div class="score-grid" role="radiogroup" aria-label="${metric.title}">
+              <div class="table-head">
+                <div class="head-cell">Arvosana</div>
+                <div class="head-cell">Määrittely</div>
+              </div>
+              ${[4,3,2,1].map(score => `
+                <label class="score-row" data-metric="${metric.key}" data-score="${score}">
+                  <input class="sr-radio" type="radio" name="${metric.key}" value="${score}">
+                  <div class="score-cell">${score}</div>
+                  <div class="definition-cell">${metric.scores[score]}</div>
+                </label>
+              `).join("")}
+            </div>
+          </div>
+        `;
+
+        container.appendChild(section);
+      });
+
+      document.querySelectorAll(".score-row").forEach(row => {
+        row.addEventListener("click", () => {
+          const metricKey = row.dataset.metric;
+          const score = Number(row.dataset.score);
+          state[metricKey] = score;
+
+          document.querySelectorAll(`[data-metric="${metricKey}"]`).forEach(item => {
+            item.classList.toggle("selected", Number(item.dataset.score) === score);
+          });
+
+          updateSummary();
+        });
+      });
+    }
+
+    function getTotal() {
+      return Object.values(state).reduce((sum, value) => sum + Number(value || 0), 0);
+    }
+
+    function allScoresSelected() {
+      return Object.values(state).every(value => Number(value) > 0);
+    }
+
+    function getEmailBody() {
+      const name = $("sellerName").value.trim();
+      const assessmentDate = formatDateForFi($("assessmentDate").value);
+      const meetingDate = formatDateForFi($("meetingDate").value);
+      const strengths = $("strengths").value.trim();
+      const focus = $("focus").value.trim();
+      const total = getTotal();
+      const average = (total / metrics.length).toFixed(1);
+
+      const lines = [
+        `SY Tiimi tekemisen laadun mittaristo – itsearviointi`,
+        ``,
+        `Myyjä: ${name || "[nimi puuttuu]"}`,
+        `Itsearvioinnin päivämäärä: ${assessmentDate || "[päivämäärä puuttuu]"}`,
+        `Kehityskeskustelu: ${meetingDate || "[ei täytetty]"}`,
+        ``,
+        `Kokonaispisteet: ${total}/20`,
+        `Keskiarvo: ${average}/4`,
+        ``,
+        `Mittarikohtainen arvio:`,
+        ...metrics.flatMap(metric => {
+          const score = state[metric.key];
+          return [
+            ``,
+            `${metric.title}: ${score || "-"}/4`,
+            score ? `Määritelmä: ${metric.scores[score]}` : `Määritelmä: ei arvioitu`
+          ];
+        }),
+        ``,
+        `Missä onnistuin parhaiten?`,
+        strengths || "[ei täytetty]",
+        ``,
+        `Mihin haluan keskittyä seuraavaksi?`,
+        focus || "[ei täytetty]"
+      ];
+
+      return lines.join("\n");
+    }
+
+    function getEmailSubject() {
+      const name = $("sellerName").value.trim() || "myyjä";
+      const date = formatDateForFi($("assessmentDate").value) || "";
+      return `Itsearviointi – ${name}${date ? " – " + date : ""}`;
+    }
+
+    function updateSummary() {
+      const total = getTotal();
+      $("totalScore").textContent = total;
+
+      const list = $("summaryList");
+      list.innerHTML = metrics.map(metric => `
+        <li>
+          <span>${metric.title}</span>
+          <strong>${state[metric.key] || "-"}/4</strong>
+        </li>
+      `).join("");
+
+      $("emailPreview").textContent = getEmailBody();
+
+      const ready = allScoresSelected() && $("sellerName").value.trim().length > 0;
+      $("emailButton").disabled = !ready;
+      $("copyButton").disabled = !ready;
+    }
+
+    function showNotice(message, type = "ok") {
+      const notice = $("notice");
+      notice.textContent = message;
+      notice.className = `notice show ${type}`;
+      window.setTimeout(() => {
+        notice.className = "notice";
+      }, 5000);
+    }
+
+    function openEmailDraft() {
+      if (!allScoresSelected()) {
+        showNotice("Valitse arvosana jokaiselle mittarille ennen lähettämistä.", "error");
+        return;
+      }
+
+      if (!$("sellerName").value.trim()) {
+        showNotice("Lisää myyjän nimi ennen lähettämistä.", "error");
+        return;
+      }
+
+      const subject = encodeURIComponent(getEmailSubject());
+      const body = encodeURIComponent(getEmailBody());
+      const mailto = `mailto:${encodeURIComponent(MANAGER_EMAIL)}?subject=${subject}&body=${body}`;
+
+      navigator.clipboard?.writeText(getEmailBody()).catch(() => {});
+      window.location.href = mailto;
+    }
+
+    async function copyEmailBody() {
+      if (!allScoresSelected()) {
+        showNotice("Valitse arvosana jokaiselle mittarille ennen kopiointia.", "error");
+        return;
+      }
+
+      if (!$("sellerName").value.trim()) {
+        showNotice("Lisää myyjän nimi ennen kopiointia.", "error");
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(getEmailBody());
+        showNotice("Sähköpostipohja kopioitu leikepöydälle.");
+      } catch {
+        showNotice("Kopiointi ei onnistunut automaattisesti. Voit maalata ja kopioida sähköpostipohjan käsin.", "error");
+      }
+    }
+
+    function initDatePicker(id) {
+      const input = $(id);
+      input.addEventListener("click", () => {
+        input.focus();
+        if (typeof input.showPicker === "function") input.showPicker();
+      });
+    }
+
+    function init() {
+      $("assessmentDate").value = new Date().toISOString().slice(0, 10);
+
+      renderMetrics();
+      updateSummary();
+
+      ["sellerName", "assessmentDate", "meetingDate", "strengths", "focus"].forEach(id => {
+        $(id).addEventListener("input", updateSummary);
+      });
+
+      $("emailButton").addEventListener("click", openEmailDraft);
+      $("copyButton").addEventListener("click", copyEmailBody);
+
+      initDatePicker("assessmentDate");
+      initDatePicker("meetingDate");
+    }
+
+    init();
+  </script>
+</body>
+</html>
